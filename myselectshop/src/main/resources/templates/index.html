@@ -12,8 +12,29 @@
   <title>나만의 셀렉샵</title>
 </head>
 <body>
-<div class="header">
-  Select Shop
+<div class="header" style="position:relative;">
+  <!--headr 추가 부분-->
+  <div th:if="${username != '' }">
+    <div id="header-title-login-user">
+      <span th:text="${username}"></span> 님의
+    </div>
+    <div id="header-title-select-shop">
+      Select Shop
+    </div>
+  </div>
+  <div th:unless="${username != ''}">
+    <div id="header-title-select-shop">
+      Select Shop
+    </div>
+    <a id="sign-text" href="/api/user/signup">
+      회원가입
+    </a>
+    <a id="login-text" href="/api/user/login">
+      로그인
+    </a>
+  </div>
+
+  <!--/headr 추가 부분-->
 </div>
 <div class="nav">
   <div class="nav-see active">
