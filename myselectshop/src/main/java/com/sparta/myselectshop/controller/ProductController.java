@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -26,13 +25,6 @@ public class ProductController {
         return productService.createProduct(requestDto, request);
     }
 
-    // 관심 상품 최저가 등록하기
-    @PutMapping("/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto, HttpServletRequest request) {
-        // 응답 보내기 (업데이트된 상품 id)
-        return productService.updateProduct(id, requestDto, request);
-    }
-
     // 관심 상품 조회하기
     @GetMapping("/products")
     public Page<Product> getProducts(
@@ -44,6 +36,24 @@ public class ProductController {
     ) {
         // 응답 보내기
         return productService.getProducts(request, page-1, size, sortBy, isAsc);
+    }
+
+    // 관심 상품 최저가 등록하기
+    @PutMapping("/products/{id}")
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto, HttpServletRequest request) {
+        // 응답 보내기 (업데이트된 상품 id)
+        return productService.updateProduct(id, requestDto, request);
+    }
+
+    // 상품에 폴더 추가
+    @PostMapping("/products/{productId}/folder")
+    public Long addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId,
+            HttpServletRequest request
+    ) {
+        Product product = productService.addFolder(productId, folderId, request);
+        return product.getId();
     }
 
 }
